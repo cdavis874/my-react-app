@@ -43,7 +43,7 @@ function Board({ squares, onSquareClick }) {
   );
 }
 
-function TicTacToe() {
+function TicTacToe({ onBack }) {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
 
@@ -72,9 +72,12 @@ function TicTacToe() {
       <h2>Tic Tac Toe</h2>
       <p>{status}</p>
       <Board squares={squares} onSquareClick={handleClick} />
-      <button onClick={resetGame} style={{ marginTop: '10px' }}>
-        Restart Game
-      </button>
+      <div style={{ marginTop: '10px' }}>
+        <button onClick={resetGame}>Restart Game</button>
+        <button onClick={onBack} style={{ marginLeft: '10px' }}>
+          Back
+        </button>
+      </div>
     </div>
   );
 }

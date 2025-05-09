@@ -1,38 +1,35 @@
 import { useState } from 'react';
 import './App.css';
 import TicTacToe from './TicTacToe';
+import IncrementorApp from './IncrementorApp';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [prestige, setPrestige] = useState(1);
-  const [showGame, setShowGame] = useState(false);
+  const [currentApp, setCurrentApp] = useState(null);
+
+  const goHome = () => setCurrentApp(null);
 
   return (
-    <>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + prestige)}>
-          count is {count}
-        </button>
-        <button onClick={() => {setCount(0); setPrestige((prestige) => 1 + prestige)}}>
-          Incrementor Count is {prestige}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
+    <div>
+      <h1>My React Playground</h1>
 
-      <div className="TicTacToe">
-        {!showGame ? (
-          <button onClick={() => setShowGame(true)}>
-            Start Tic Tac Toe Game
+      {!currentApp && (
+        <>
+          <button onClick={() => setCurrentApp('incrementor')}>
+            Open Incrementor App
           </button>
-        ) : (
-          <TicTacToe />
-        )}
-      </div>
-    </>
-  )
+          <button
+            onClick={() => setCurrentApp('tictactoe')}
+            style={{ marginLeft: '10px' }}
+          >
+            Play Tic Tac Toe
+          </button>
+        </>
+      )}
+
+      {currentApp === 'incrementor' && <IncrementorApp onBack={goHome} />}
+      {currentApp === 'tictactoe' && <TicTacToe onBack={goHome} />}
+    </div>
+  );
 }
 
-export default App
- 
+export default App;
