@@ -1,28 +1,39 @@
-import { useState } from 'react';
-
-const products = [
-  { id: 1, name: 'T-Shirt', price: 19.99 },
-  { id: 2, name: 'Coffee Mug', price: 9.99 },
-  { id: 3, name: 'Notebook', price: 5.49 },
-];
+import { useEffect, useState } from 'react';
 
 function StoreApp({ onBack }) {
+  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
+  useEffect(() => {
+    fetch('http://localhost:3001/products')
+      .then((res) => res.json())
+      .then(setProducts);
+
+    fetch('http://localhost:3001/cart')
+      .then((res) => res.json())
+      .then(setCart);
+  }, []);
+
   const addToCart = (product) => {
-    setCart((prev) => [...prev, product]);
+    fetch('http://localhost:3001/cart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(product)
+    })
+      .then((res) => res.json())
+      .then((newItem) => setCart((prev) => [...prev, newItem]));
   };
 
   const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>Store App</h2>
+      <h2>Store App (with API)</h2>
 
       <h3>Products:</h3>
       {products.map((product) => (
-        <div key={product.id} style={{ marginBottom: '10px' }}>
-          <strong>{product.name}</strong> - ${product.price.toFixed(2)}{' '}
+        <div key={product.id}>
+          {product.name} - ${product.price.toFixed(2)}{' '}
           <button onClick={() => addToCart(product)}>Add to Cart</button>
         </div>
       ))}
@@ -30,7 +41,9 @@ function StoreApp({ onBack }) {
       <h3>Cart ({cart.length} items):</h3>
       <ul>
         {cart.map((item, idx) => (
-          <li key={idx}>{item.name} - ${item.price.toFixed(2)}</li>
+          <li key={idx}>
+            {item.name} - ${item.price.toFixed(2)}
+          </li>
         ))}
       </ul>
 

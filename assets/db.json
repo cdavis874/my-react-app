@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "T-Shirt",
+      "price": 19.99
+    },
+    {
+      "id": "2",
+      "name": "Coffee Mug",
+      "price": 9.99
+    },
+    {
+      "id": "3",
+      "name": "Notebook",
+      "price": 5.49
+    }
+  ],
+  "cart": [
+    {
+      "id": "1",
+      "name": "T-Shirt",
+      "price": 19.99
+    },
+    {
+      "id": "1",
+      "name": "T-Shirt",
+      "price": 19.99
+    }
+  ]
+}
